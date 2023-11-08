@@ -79,8 +79,8 @@ const MenuPage = () => {
             type="checkbox"
             id="veg"
             value="veg"
-            checked={filters.foodType === "veg" ? true : false}
-            onClick={handleCheckBoxClick}
+            checked={filters.isVeg}
+            onChange={handleCheckBoxClick}
           />
           <label htmlFor="veg">Veg</label>
         </div>
@@ -88,9 +88,9 @@ const MenuPage = () => {
           <input
             type="checkbox"
             id="spicy"
-            checked={filters.foodType === "spicy" ? true : false}
+            checked={filters.isSpicy}
             value="spicy"
-            onClick={handleCheckBoxClick}
+            onChange={handleCheckBoxClick}
           />
           <label htmlFor="spicy">Spicy</label>
         </div>
