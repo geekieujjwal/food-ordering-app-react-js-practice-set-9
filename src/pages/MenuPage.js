@@ -1,11 +1,12 @@
 import React, { useContext, useState } from "react";
 
-// import "../App";
 import Header from "../components/Header";
 import { ContextProvider } from "../contexts/FoodContext";
+import { NavLink } from "react-router-dom";
 
 const MenuPage = () => {
-  const { foodsArr } = useContext(ContextProvider);
+  const { foodsArr, handleAddToCartClick, cart } = useContext(ContextProvider);
+
   const [filters, setFilters] = useState({
     isVeg: false,
     isSpicy: false,
@@ -50,14 +51,6 @@ const MenuPage = () => {
     } else if (e.target.value === "spicy") {
       setFilters((prev) => ({ ...prev, isSpicy: !prev.isSpicy }));
     }
-
-    // if (isChecked) {
-    //   const vegFoods = foodsArr.filter((food) => food.is_vegetarian);
-    //   setFoodsArr(vegFoods);
-    // } else if (!isChecked) {
-    //   // Reset the filter and show all foods
-    //   setFoodsArr(foodsArr);
-    // }
   };
   const handleRadioClick = (e) => {
     setFilters((prev) => ({ ...prev, priceType: e.target.value }));
@@ -118,35 +111,34 @@ const MenuPage = () => {
         </div>
       </div>
       <div className="foods">
-        {filteredFoods.map(
-          ({
-            id,
-            name,
-            description,
-            price,
-            image,
-            delivery_time,
-            is_vegetarian,
-            is_spicy,
-          }) => {
-            return (
-              <div key={id} className="individual-food hover-item">
-                <img src={image} alt="image" className="image" />
-                <p>
-                  <b>Name: </b>
-                  {name}
-                </p>
-                <p>
-                  <b>Description: </b>
-                  {description}
-                </p>
-                <p>Price: {price}</p>
-                <p>Delivery time: {delivery_time}</p>
-                <button>Add to Cart</button>
-              </div>
-            );
-          }
-        )}
+        {filteredFoods.map((food) => {
+          const { id, name, description, price, image, delivery_time } = food;
+          const isInCart = cart.some((cartFood) => cartFood.id === id);
+          return (
+            <div key={id} className="individual-food hover-item">
+              <img src={image} alt="image" className="image" />
+              <p>
+                <b>Name: </b>
+                {name}
+              </p>
+              <p>
+                <b>Description: </b>
+                {description}
+              </p>
+              <p>Price: ${price}</p>
+              <p>Delivery time: {delivery_time}</p>
+              {isInCart ? (
+                <NavLink to="/cart">
+                  <button>Go to Cart</button>
+                </NavLink>
+              ) : (
+                <button onClick={() => handleAddToCartClick(food)}>
+                  Add to Cart
+                </button>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
