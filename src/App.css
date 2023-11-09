@@ -87,3 +87,23 @@
   display: flex;
   justify-content: space-around;
 }
+
+.apply-coupon-btn {
+  margin-bottom: 2rem;
+}
+
+.header-link:hover {
+  font-size: 20px;
+  color: red;
+  font-weight: 600;
+}
+
+button {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 325px) {
+  .inputs {
+    gap: 0;
+  }
+}
