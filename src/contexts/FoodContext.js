@@ -5,6 +5,11 @@ export const ContextProvider = createContext();
 
 export const FoodContext = ({ children }) => {
   const [foodsArr, setFoodsArr] = useState([]);
+  const [cart, setCart] = useState([]);
+
+  const handleAddToCartClick = (food) => {
+    setCart((prev) => [...prev, food]);
+  };
 
   useEffect(() => {
     fakeFetch("https://example.com/api/menu").then((data) => {
@@ -13,7 +18,9 @@ export const FoodContext = ({ children }) => {
   }, []);
 
   return (
-    <ContextProvider.Provider value={{ foodsArr, setFoodsArr }}>
+    <ContextProvider.Provider
+      value={{ foodsArr, setFoodsArr, cart, setCart, handleAddToCartClick }}
+    >
       {children}
     </ContextProvider.Provider>
   );
